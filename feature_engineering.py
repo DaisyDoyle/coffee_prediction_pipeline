@@ -67,37 +67,37 @@ def hex_aggregations(df):
     return df
 
 
-def get_osm_features(lat, lon, radius=300):
-    point = (lat, lon)
-    tags = {
-        'amenity': ['restaurant', 'pub', 'fast_food', 'bank', 'pharmacy'],
-        'shop': ['supermarket', 'clothes', 'convenience'],
-        'public_transport': True,
-        'office': True
-    }
-    try:
-        gdf = ox.features_from_point(point, tags=tags, dist=radius)
-        return len(gdf)
-    except:
-        return 0
+# def get_osm_features(lat, lon, radius=300):
+#     point = (lat, lon)
+#     tags = {
+#         'amenity': ['restaurant', 'pub', 'fast_food', 'bank', 'pharmacy'],
+#         'shop': ['supermarket', 'clothes', 'convenience'],
+#         'public_transport': True,
+#         'office': True
+#     }
+#     try:
+#         gdf = ox.features_from_point(point, tags=tags, dist=radius)
+#         return len(gdf)
+#     except:
+#         return 0
 
 
-def build_osm_features_bulk(df):
-    unique_hexes = df[['h3_cell', 'h3_lat', 'h3_lon']].drop_duplicates()
+# def build_osm_features_bulk(df):
+#     unique_hexes = df[['h3_cell', 'h3_lat', 'h3_lon']].drop_duplicates()
 
-    hex_features = []
+#     hex_features = []
 
-    for _, hex_row in unique_hexes.iterrows():
+#     for _, hex_row in unique_hexes.iterrows():
 
-        count = get_osm_features(hex_row.h3_lat, hex_row.h3_lon)
+#         count = get_osm_features(hex_row.h3_lat, hex_row.h3_lon)
 
-        hex_features.append({
-            "h3_cell": hex_row.h3_cell,
-            "osm_poi_count": count
-        })
+#         hex_features.append({
+#             "h3_cell": hex_row.h3_cell,
+#             "osm_poi_count": count
+#         })
 
-    hex_df = pd.DataFrame(hex_features)
+#     hex_df = pd.DataFrame(hex_features)
 
-    hex_df.to_parquet("data/processed/osm_hex_features.parquet")
+#     hex_df.to_parquet("data/processed/osm_hex_features.parquet")
 
-    return df.merge(hex_df, on="h3_cell", how="left")
+#     return df.merge(hex_df, on="h3_cell", how="left")

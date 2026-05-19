@@ -1,7 +1,7 @@
 # tests/test_features.py
 import pandas as pd
 import numpy as np
-from model_training import spatial_split, FEATURE_COLS, TARGET_COL
+from model_training import spatial_split, FEATURE_COLS
 
 def make_dummy_df(n=100):
     df = pd.DataFrame({

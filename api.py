@@ -19,7 +19,7 @@ class LocationInput(BaseModel):
 
 
 def build_features(lat, lon, df=None):
-    h3_cell = h3.latlng_to_cell(lat, lon, 9)
+    # h3_cell = h3.latlng_to_cell(lat, lon, 9)
 
     features = {
         "nearest_cafe_distance": 200.0,   

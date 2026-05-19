@@ -1,12 +1,10 @@
 import logging
-import json
 import pandas as pd
 
 import data_ingestion
 import constants
 import feature_engineering
 import model_training
-import api
 import mlflow
 
 
@@ -55,12 +53,7 @@ def call_feature_engineering(raw_df):
     return hex_df
 
 
-def train_model(processed_df):
-    logging.info("Starting model training")
-    target = model_training.get_city_hexes()
 
-    
-    logging.info("Model training completed successfully.")
 
 
 raw_df = access_ingestion()

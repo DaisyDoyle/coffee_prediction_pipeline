@@ -2,6 +2,13 @@ import h3
 import numpy as np
 from pathlib import Path
 
+import pandas as pd
+import joblib
+import matplotlib.pyplot as plt
+
+import folium
+from folium.plugins import HeatMap
+
 Path("reports").mkdir(exist_ok=True)
 
 
@@ -36,8 +43,7 @@ def build_cell_features(cell):
     }
 
 
-import pandas as pd
-import joblib
+
 
 
 print("🔥 heatmap.py is running")
@@ -80,7 +86,7 @@ for cell in cells:
 heatmap_df = pd.DataFrame(results)
 
 
-import matplotlib.pyplot as plt
+
 
 plt.figure(figsize=(10, 8))
 
@@ -101,8 +107,7 @@ plt.savefig("reports/heatmap_debug.png")
 plt.close()
 
 
-import folium
-from folium.plugins import HeatMap
+
 
 
 m = folium.Map(location=[53.4084, -2.9916], zoom_start=12)
@@ -121,7 +126,7 @@ HeatMap(
     max_zoom=13
 ).add_to(m)
 
-from pathlib import Path
+
 print("💾 about to save HTML")
 output_path = Path("reports/coffee_heatmap.html").resolve()
 print("Saving to:", output_path)
