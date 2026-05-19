@@ -3,6 +3,8 @@ name: CI Pipeline
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -19,10 +21,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install protobuf==3.20.3
+          pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
 
-      - name: Run basic sanity check
+      - name: Lint
         run: |
-          python -c "import main; print('import success')"
+          pip install ruff
+          ruff check .
+
+      - name: Run tests
+        run: pytest tests/ -v
+        env:
+          MLFLOW_TRACKING_URI: "file:./mlruns"  
