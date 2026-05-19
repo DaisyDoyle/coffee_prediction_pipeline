@@ -20,6 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
+          pip install protobuf==3.20.3
           pip install -r requirements.txt
 
       - name: Run basic sanity check
