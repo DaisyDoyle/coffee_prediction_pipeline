@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import pandas as pd
 import h3
-from explainer import explain_hex
-import shap
+# from explainer import explain_hex
+# import shap
 
 app = FastAPI(title="Coffee Chain Predictor")
 
@@ -59,31 +59,31 @@ def predict(data: LocationInput):
     }
 
 
-@app.post("/predict")
-def predict(request: PredictionRequest):
-    features = request.dict()
-    feature_df = pd.DataFrame([features])[FEATURE_COLS]
+# @app.post("/predict")
+# def predict(request: PredictionRequest):
+#     features = request.dict()
+#     feature_df = pd.DataFrame([features])[FEATURE_COLS]
 
-    score = float(pipeline.predict_proba(feature_df)[0, 1])
+#     score = float(pipeline.predict_proba(feature_df)[0, 1])
 
-    # Compute SHAP for this single prediction
-    explainer = shap.Explainer(pipeline.named_steps['model'],
-                               pd.DataFrame([features])[FEATURE_COLS])
-    shap_vals  = explainer(feature_df)
-    shap_dict  = dict(zip(FEATURE_COLS, shap_vals.values[0].tolist()))
+#     # Compute SHAP for this single prediction
+#     explainer = shap.Explainer(pipeline.named_steps['model'],
+#                                pd.DataFrame([features])[FEATURE_COLS])
+#     shap_vals  = explainer(feature_df)
+#     shap_dict  = dict(zip(FEATURE_COLS, shap_vals.values[0].tolist()))
 
-    explanation = explain_hex(
-        hex_id=request.h3_cell,
-        features=features,
-        shap_values=shap_dict,
-        score=score,
-    )
+#     explanation = explain_hex(
+#         hex_id=request.h3_cell,
+#         features=features,
+#         shap_values=shap_dict,
+#         score=score,
+#     )
 
-    return {
-        "h3_cell":           request.h3_cell,
-        "chain_likelihood":  round(score, 4),
-        "explanation":       explanation,
-        "top_shap_drivers":  dict(sorted(shap_dict.items(),
-                                         key=lambda x: abs(x[1]),
-                                         reverse=True)[:3]),
-    }
+#     return {
+#         "h3_cell":           request.h3_cell,
+#         "chain_likelihood":  round(score, 4),
+#         "explanation":       explanation,
+#         "top_shap_drivers":  dict(sorted(shap_dict.items(),
+#                                          key=lambda x: abs(x[1]),
+#                                          reverse=True)[:3]),
+#     }
