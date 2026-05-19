@@ -1,8 +1,8 @@
 import h3
-import pandas as pd
+# import pandas as pd
 from sklearn.neighbors import BallTree
 import numpy as np
-import osmnx as ox
+# import osmnx as ox
 
 def assign_h3(df, lat_col='lat', lon_col='lon', resolution=9):
     """
