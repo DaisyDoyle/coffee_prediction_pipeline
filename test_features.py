@@ -21,7 +21,7 @@ def make_dummy_df(n=100):
 def test_spatial_split_no_leakage():
     df = make_dummy_df(100)
     X_train, y_train, X_val, y_val = spatial_split(df)
-    # Val set should be southern rows only — no overlap
+    
     assert len(X_train) + len(X_val) == len(df)
     assert X_train.index.intersection(X_val.index).empty
 
